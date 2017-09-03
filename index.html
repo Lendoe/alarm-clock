@@ -1,0 +1,118 @@
+<html>
+<head>
+<title>
+  
+</title>
+<style type="text/css">
+  .fred {
+  position:absolute;
+  margin: 400px;
+  margin-top: 300px;
+  height:200px;
+  width:400px;
+  border: solid black 8px;
+  border-radius: 12px;
+  font-size: 48px;
+  text-align: center;
+  background-image: url( );
+}
+
+.setting{
+  font-size: 40px;
+}
+  
+/*.fred{
+  font-size: 48px;
+  border:28px;
+  border: solid black;
+
+}*/
+.interface{
+  position:absolute;
+  margin-top:550px;
+  margin-left: 435px;
+  border:solid black 6px;
+  border-radius: 10px;
+}
+
+.bozo{
+  border:8px;
+  height:20px;
+
+}
+.tom{
+  border:8px;
+}
+
+
+</style>
+
+<script language="JavaScript">
+
+function showTime() {
+  var timeNow = new Date();
+  var hours   = timeNow.getHours();
+  var minutes = timeNow.getMinutes();
+  var seconds = timeNow.getSeconds();
+  var timeString = "" + ((hours > 12) ? hours - 12 : hours);
+  timeString  += ((minutes < 10) ? ":0" : ":") + minutes;
+  timeString  += ((seconds < 10) ? ":0" : ":") + seconds;
+  timeString  += (hours >= 12) ? " P.M." : " A.M.";
+  document.htmlClock.timeField.value = timeString;
+  timerID = setTimeout("showTime()", 1000);
+}
+
+
+
+</script>
+<!-- display window for used to set alarm -->
+<script type="text/javascript">
+  function setAlarm(){
+    var timeNow = new Date();
+    var aHours   = timeNow.getHours();
+    var aMinutes = timeNow.getMinutes();
+    var userHours = document.getElementById('tom').value;
+    var userMinutes = document.getElementById('jerry').value;
+
+    //used to convert aHours from military 
+      if(aHours > 12){
+        aHours = aHours - 12;
+      }
+
+    console.log(aHours);
+    console.log(userHours);
+    console.log(userMinutes);
+    console.log(aMinutes);
+    if(userHours == aHours && userMinutes == aMinutes){
+      playAlarm();
+    }
+  // needed to have the console.log checked for a match every second.
+  // 1000 millisecond=1 second
+    setInterval(setAlarm, 1000);
+  }
+</script>
+
+<script type="text/javascript">
+  function playAlarm(){
+    var alarm = document.getElementById('audio');
+    alarm.play()
+  }
+</script>
+
+</head>
+<body onLoad="showTime()">
+  <form name="htmlClock">
+    <input class="fred" type="text" 
+       name="timeField" 
+       size=14>
+       <!-- user interface -->
+       <div class="interface">
+    <INPUT class="bozo" id="tom" type="text" name="hours" placeholder="hour"> 
+    <INPUT class="bozo" id="tom" type="text" placeholder="minutes" name=" minutes">
+    <INPUT class="bozo" id="on" type="button" name="on" value=" on/off " OnClick="setAlarm()"> 
+        </div>
+  </form>
+  <!-- the actual alarm sound -->
+  <audio id="audio" src="sounds/alarm.mp3"></audio>
+</body>
+</html>
